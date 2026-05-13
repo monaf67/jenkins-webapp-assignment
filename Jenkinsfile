@@ -10,13 +10,12 @@ pipeline {
             }
         }
 
-        stage('Unit Testing') {
-            steps {
-                echo 'Running unit test cases...'
-                sh 'pip3 install -r requirements.txt || true'
-                sh 'python3 -m pytest tests/'
-            }
-        }
+       stage('Unit Testing') {
+    steps {
+        echo 'Running unit test cases inside Docker container...'
+        sh 'docker run --rm flask-webapp:latest python -m pytest tests/'
+    }
+}
 
         stage('Containerized Deployment') {
             steps {
